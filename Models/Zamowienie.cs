@@ -8,7 +8,6 @@ namespace Hurtownia.Models
 {
     public class Zamowienie
     {
-
         public int ZamowienieId { get; set; }
         [Required(ErrorMessage = "Wprowadz Imie")]
         [StringLength(20)]
@@ -37,11 +36,12 @@ namespace Hurtownia.Models
 
         public decimal WartoscZamowienia { get; set; }
         List<PozycjaZamowienia> PozycjeZamowienia { get; set; }
-     }
+    }
 
     public enum StanZamowienia
     {
         Nowe,
         Zrealizowane
     }
+
 }

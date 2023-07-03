@@ -1,6 +1,6 @@
 ﻿namespace Hurtownia.Models
 {
-    internal class PozycjaZamowienia
+    public class PozycjaZamowienia
     {
         public int PozycjaZamowieniaId { get; set; }
         public int ZamowienieId { get; set; }
