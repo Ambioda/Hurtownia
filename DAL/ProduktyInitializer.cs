@@ -9,7 +9,7 @@ using System.Data.Entity.Migrations;
 
 namespace Hurtownia.DAL
 {
-    public class ProduktyInitializer : DbMigrationsConfiguration<Hurtownia.DAL.ProduktyContext>
+    public class ProduktyInitializer : CreateDatabaseIfNotExists<Hurtownia.DAL.ProduktyContext>
     {
 
 

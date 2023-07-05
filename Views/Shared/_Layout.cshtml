@@ -1,40 +1,46 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sklep Internetowy</title>
+    <link rel="stylesheet" href="../Content/src/bootstrap.min.css">
+    <script src="../Content/src/jquery-3.3.1.slim.min.js"></script>
+    <script src="../Content/src/bootstrap.min.js"></script>
+    <link href="../Content/src/strona.css" rel="stylesheet" />
+
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Sklep Internetowy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <!-- Przeniesienie listy rozwijanej z kategoriami do tabeli poniżej -->
+            </ul>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Koszyk <span class="badge badge-light">0</span></button>
+            <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">Logowanie</button>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            @RenderBody()
         </div>
     </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <footer class="mt-auto" id="footer" style=" background-color: #f5f5f5;">
+        <div class="container">
+            <span class="text-muted">Adres: ul. Przykładowa 1, 00-000 Miasto</span><br>
+            <span class="text-muted">Email: kontakt@sklep.pl</span><br>
+            <span class="text-muted">Telefon: 123 456 789</span>
+        </div>
+    </footer>
+    @RenderSection("Scripts", required : false)
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
