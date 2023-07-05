@@ -14,6 +14,11 @@ namespace Hurtownia
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+    name: "ProduktyList",
+    url: "Kategoria/{nazwaKategori}.html",
+    defaults: new { controller = "Produkty", action = "Lista" });
+
+            routes.MapRoute(
                 name: "StronyStatyczne",
                 url: "strony/{nazwa}.html",
                 defaults: new { controller = "Home", action = "StronyStatyczne" });

@@ -4,5 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Lista</h2>
 
+
+
+
+<div class="container mt-4">
+    <div class="row">
+        @Html.Action("KategorieMenu")
+
+        @Html.Partial("_ProduktyList")
+    </div>
+    </div>
+</div>

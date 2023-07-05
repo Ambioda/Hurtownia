@@ -14,7 +14,7 @@
                     @foreach (var kategoria in Model.Kategorie)
                     {
                         <tr>
-                            <td><a href="@Url.Action("List", "Produkty", new { nazwaKategori = kategoria.NazwaKategorii.ToLower() })">@kategoria.NazwaKategorii</a></td>
+                            <td><a href="@Url.Action("Lista", "Produkty", new { nazwaKategori = kategoria.NazwaKategorii.ToLower() })">@kategoria.NazwaKategorii</a></td>
                         </tr>
                     }
                 </tbody>

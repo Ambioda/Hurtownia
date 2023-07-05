@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Hurtownia.Models.Kategoria>
+@using Hurtownia.Infrastruktura
+<div class="col-md-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Kategorie</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var kategoria in Model)
+            {
+                <tr>
+                    <td><a href="@Url.Action("Lista", "Produkty", new { nazwaKategori = kategoria.NazwaKategorii.ToLower() })">@kategoria.NazwaKategorii</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

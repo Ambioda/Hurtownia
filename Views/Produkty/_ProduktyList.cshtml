@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Hurtownia.Models.Produkt>
+@using Hurtownia.Infrastruktura
+<div class="col-md-8">
+    <table class="table table-striped">
+
+        <h2 class="text-center">Produkty</h2>
+        <thead>
+            <tr>
+                <th>Obrazek</th>
+                <th>Nazwa przedmiotu</th>
+                <th>Opis</th>
+                <th>Cena</th>
+                <th>Kup</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produkt in Model)
+            {
+                <tr>
+                    <td style="max-width: 50px;"><img src="@Url.ObrazkiSciezka(produkt.NazwaPlikuObrazka)" class="img-thumbnail"></td>
+                    <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = produkt.ProduktId })"> @produkt.NazwaProduktu</a></td>
+                    <td>@produkt.OpisSkrocony</td>
+                    <td>@produkt.CenaProduktu</td>
+                    <td><a href="@Url.Action("DodajDoKoszyka", "Koszyk", new { Id = produkt.ProduktId })"><button class="btn btn-primary">Kup teraz</button></a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    </div>

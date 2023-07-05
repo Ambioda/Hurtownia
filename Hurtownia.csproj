@@ -208,6 +208,8 @@
     <Content Include="Views\Home\Onas.cshtml" />
     <Content Include="Views\Produkty\Lista.cshtml" />
     <Content Include="Views\Koszyk\DodajDoKoszyka.cshtml" />
+    <Content Include="Views\Produkty\_KategorieMenu.cshtml" />
+    <Content Include="Views\Produkty\_ProduktyList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
