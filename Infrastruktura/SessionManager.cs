@@ -9,30 +9,37 @@ namespace Hurtownia.Infrastruktura
 {
     public class SessionMenager : ISessionManager
     {
-        private HttpSessionStateBase session;
+        private HttpSessionState session;
 
         public SessionMenager()
         {
-           session = HttpContext.Current.Session;
-        }
-        public void Abandon()
-        {
-            throw new NotImplementedException();
+            session = HttpContext.Current.Session;
         }
 
         public T GeT<T>(string key)
         {
-            throw new NotImplementedException();
+            return (T)session[key];
         }
 
         public void Set<T>(string name, T value)
         {
-            throw new NotImplementedException();
+            session[name] = value;
+        }
+        public void Abandon()
+        {
+            session.Abandon();
         }
 
         public T TryGet<T>(string key)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return (T)session[key];
+            }
+            catch (NullReferenceException)
+            {
+                return default(T);
+            }
         }
     }
 }

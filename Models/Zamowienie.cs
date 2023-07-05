@@ -35,7 +35,7 @@ namespace Hurtownia.Models
         public StanZamowienia StanZamowienia { get; set; }
 
         public decimal WartoscZamowienia { get; set; }
-        List<PozycjaZamowienia> PozycjeZamowienia { get; set; }
+      public  List<PozycjaZamowienia> PozycjeZamowienia { get; set; }
     }
 
     public enum StanZamowienia

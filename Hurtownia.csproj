@@ -278,6 +278,7 @@
     <Compile Include="Infrastruktura\ICacheProvider.cs" />
     <Compile Include="Infrastruktura\ISessionManager.cs" />
     <Compile Include="Infrastruktura\KategorieDynamicNodeProvider.cs" />
+    <Compile Include="Infrastruktura\KoszykMenager.cs" />
     <Compile Include="Infrastruktura\ProduktySzczegolyDynamicNodeProvider.cs" />
     <Compile Include="Infrastruktura\SessionManager.cs" />
     <Compile Include="Infrastruktura\UrlHelpers.cs" />
@@ -291,6 +292,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Kategoria.cs" />
+    <Compile Include="Models\PozycjaKoszyka.cs" />
     <Compile Include="Models\PozycjaZamowienia.cs" />
     <Compile Include="Models\Produkt.cs" />
     <Compile Include="Models\Zamowienie.cs" />

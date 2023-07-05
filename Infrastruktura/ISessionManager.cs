@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hurtownia.Infrastruktura
 {
-    interface ISessionManager
+   public interface ISessionManager
     {
         T GeT<T>(string key);
         void Set<T>(string name, T value);
