@@ -12,7 +12,8 @@ namespace Hurtownia.Models
         public int KategoriaId { get; set; }
         [Required(ErrorMessage ="Wprowadz nazwe produktu")]
         [StringLength(100)]
-        public string NazwaProduktu { get; set; }
+                public string NazwaProduktu { get; set; }
+
         public DateTime DataDodania { get; set; }
         [StringLength(100)]
         public string NazwaPlikuObrazka { get; set; }

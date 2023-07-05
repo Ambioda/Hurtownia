@@ -1,4 +1,7 @@
-﻿<div class="container mt-4">
+﻿@model Hurtownia.ViewModels.HomeViewModel
+@using Hurtownia.Infrastruktura
+
+<div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
             <table class="table">
@@ -8,42 +11,68 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>Kategoria 1</td></tr>
-                    <tr><td>Kategoria 2</td></tr>
+                    @foreach (var kategoria in Model.Kategorie)
+                    {
+                        <tr>
+                            <td><a href="@Url.Action("List", "Produkty", new { nazwaKategori = kategoria.NazwaKategorii.ToLower() })">@kategoria.NazwaKategorii</a></td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
+
         <div class="col-md-8">
             <table class="table table-striped">
+
+                <h2 class="text-center">Bestseller</h2>
                 <thead>
                     <tr>
                         <th>Obrazek</th>
                         <th>Nazwa przedmiotu</th>
                         <th>Opis</th>
-                        <th>Kategoria</th>
                         <th>Cena</th>
                         <th>Kup</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach (var bestseller in Model.BestSellery)
+                    {
+                        <tr style="background-color: yellow;">
+                            <td style="max-width: 50px;"><img src="@Url.ObrazkiSciezka(bestseller.NazwaPlikuObrazka)" class="img-thumbnail"></td>
+                            <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = bestseller.ProduktId })"> @bestseller.NazwaProduktu</a></td>
+                            <td>@bestseller.OpisSkrocony</td>
+                            <td>@bestseller.CenaProduktu</td>
+                            <td><a href="@Url.Action("DodajDoKoszyka", "Koszyk", new { Id= bestseller.ProduktId })"><button class="btn btn-primary">Kup teraz</button></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <table class="table table-striped">
+
+                <h2 class="text-center">Nowości</h2>
+                <thead>
                     <tr>
-                        <td><img src="asd.jpg"></td>
-                        <td>Przedmiot 1</td>
-                        <td>Opis przedmiotu 1</td>
-                        <td>Hamulce</td>
-                        <td>100 PLN</td>
-                        <td><button class="btn btn-primary">Kup teraz</button></td>
+                        <th>Obrazek</th>
+                        <th>Nazwa przedmiotu</th>
+                        <th>Opis</th>
+                        <th>Cena</th>
+                        <th>Kup</th>
                     </tr>
-                    <tr>
-                        <td><img src="asd.jpg"></td>
-                        <td>Przedmiot 2</td>
-                        <td>Opis przedmiotu 2</td>
-                        <td>Hamulce</td>
-                        <td>99 PLN</td>
-                        <td><button class="btn btn-primary">Kup teraz</button></td>
-                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var nowosc in Model.Nowosci)
+                    {
+                        <tr style="background-color: orange;">
+                            <td style="max-width: 50px;"><img src="@Url.ObrazkiSciezka(nowosc.NazwaPlikuObrazka)" class="img-thumbnail"></td>
+                            <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = nowosc.ProduktId })"> @nowosc.NazwaProduktu</a></td>
+                            <td>@nowosc.OpisSkrocony</td>
+                            <td>@nowosc.CenaProduktu</td>
+                            <td><a href="@Url.Action("DodajDoKoszyka", "Koszyk", new { Id= nowosc.ProduktId })"><button class="btn btn-primary">Kup teraz</button></a></td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
-        </div>
+    </div>
 </div>

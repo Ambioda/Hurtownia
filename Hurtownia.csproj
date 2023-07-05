@@ -49,11 +49,17 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
     <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Core, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
@@ -103,12 +109,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\dwumas.jpg" />
+    <Content Include="Content\img\frigo.jpg" />
     <Content Include="Content\img\gabka.png" />
     <Content Include="Content\img\kamizelka.png" />
     <Content Include="Content\img\obrazek3.jpg" />
     <Content Include="Content\img\obrazek5.jpg" />
     <Content Include="Content\img\obrazek6.jpg" />
     <Content Include="Content\img\odswierzac.png" />
+    <Content Include="Content\img\stalowka.png" />
+    <Content Include="Content\img\szyba.jpg" />
+    <Content Include="Content\img\tarcza.png" />
+    <Content Include="Content\img\uchwyt.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\src\bootstrap.min.css" />
     <Content Include="Content\src\bootstrap.min.js" />
@@ -161,12 +173,16 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KoszykController.cs" />
+    <Compile Include="Controllers\ProduktyController.cs" />
     <Compile Include="DAL\ProduktyContext.cs" />
     <Compile Include="DAL\ProduktyInitializer.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastruktura\AppConfig.cs" />
+    <Compile Include="Infrastruktura\UrlHelpers.cs" />
     <Compile Include="Migrations\202307032020008_InitialCreate.cs" />
     <Compile Include="Migrations\202307032020008_InitialCreate.Designer.cs">
       <DependentUpon>202307032020008_InitialCreate.cs</DependentUpon>
@@ -181,6 +197,7 @@
     <Compile Include="Models\Produkt.cs" />
     <Compile Include="Models\Zamowienie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -189,6 +206,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Onas.cshtml" />
+    <Content Include="Views\Produkty\Lista.cshtml" />
+    <Content Include="Views\Koszyk\DodajDoKoszyka.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
