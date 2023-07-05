@@ -12,13 +12,12 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Sklep Internetowy</a>
+        <a class="navbar-brand" href="@Url.Content("~/")">Sklep Internetowy</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
-                <!-- Przeniesienie listy rozwijanej z kategoriami do tabeli poniżej -->
             </ul>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Koszyk <span class="badge badge-light">0</span></button>
             <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">Logowanie</button>
@@ -36,6 +35,7 @@
             <span class="text-muted">Adres: ul. Przykładowa 1, 00-000 Miasto</span><br>
             <span class="text-muted">Email: kontakt@sklep.pl</span><br>
             <span class="text-muted">Telefon: 123 456 789</span>
+           <li><a href="@Url.Action("StronyStatyczne", "Home", new { nazwa = "Onas" })" style=""> Onas</a></li>
         </div>
     </footer>
     @RenderSection("Scripts", required : false)
