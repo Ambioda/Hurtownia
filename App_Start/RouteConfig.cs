@@ -12,6 +12,10 @@ namespace Hurtownia
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.MapRoute(
+name: "ProduktySzczegoly",
+url: "produkt-{id}.html",
+defaults: new { controller = "Produkty", action = "Szczegoly" });
 
             routes.MapRoute(
     name: "ProduktyList",

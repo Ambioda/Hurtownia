@@ -21,9 +21,11 @@ namespace Hurtownia.Controllers
             var produkty = kategoria.Produkty.ToList();
             return View(produkty);
         }
-        public ActionResult Szczegoly(string Id)
+        public ActionResult Szczegoly(int Id)
         {
-            return View();
+            var produkt = db.Produkty.Find(Id);
+
+            return View(produkt);
         }
         [ChildActionOnly]
         public ActionResult KategorieMenu()
