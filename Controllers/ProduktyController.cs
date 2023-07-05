@@ -15,10 +15,17 @@ namespace Hurtownia.Controllers
         {
             return View();
         }
-        public ActionResult Lista(string nazwaKategori)
+        public ActionResult Lista(string nazwaKategori, string searchQuery = null)
         {
             var kategoria = db.Kategorie.Include("Produkty").Where(k => k.NazwaKategorii.ToUpper() == nazwaKategori.ToUpper()).Single();
-            var produkty = kategoria.Produkty.ToList();
+            var produkty = kategoria.Produkty.Where(a => searchQuery == null || a.NazwaProduktu.ToLower().Contains(searchQuery.ToLower()) && !a.Ukryty);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_ProduktyList", produkty);
+            }
+
+
             return View(produkty);
         }
         public ActionResult Szczegoly(int Id)
@@ -28,6 +35,7 @@ namespace Hurtownia.Controllers
             return View(produkt);
         }
         [ChildActionOnly]
+        [OutputCache(Duration = 60000)]
         public ActionResult KategorieMenu()
         {
             var kategorie = db.Kategorie.ToList();
