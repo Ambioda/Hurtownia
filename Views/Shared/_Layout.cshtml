@@ -20,8 +20,18 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
             </ul>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Koszyk <span class="badge badge-light" id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")</span></button>
-            <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">@Html.Partial("_LoginPartial")</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Konto
+                </button>
+                <div class="dropdown-menu">
+                   <center>@Html.Partial("_LoginPartial")</center>
+                </div>
+            </div>
+            <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Koszyk <span class="badge badge-light" id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")</span></button>
+
+            <!-- Dropdown menu for login/register -->
+
         </div>
     </nav>
 

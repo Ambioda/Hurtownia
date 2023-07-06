@@ -6,14 +6,20 @@
 
 
 
-<form class="form-inline" data-ajax="true" data-ajax-url="@Url.Action("_ProduktyList")" method="get" data-ajax-update="#ProduktyList">
-    <input class="form-control mr-sm-2" type="search" id="search-filter" name="searchQuery"
-           placeholder="Wyszukaj">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
-</form>
+
 <div class="container mt-4">
+    <div class="container mt-4">
+        <form class="form-inline" data-ajax="true" data-ajax-url="@Url.Action("_ProduktyList")" method="get" data-ajax-update="#ProduktyList">
+            <input class="form-control mr-sm-2" type="search" id="search-filter" name="searchQuery"
+                   placeholder="Wyszukaj">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
+
+        </form>
+    </div>
+    <p></p>
+
     <div class="row">
-        @Html.Action("KategorieMenu")
+            @Html.Action("KategorieMenu")
 
         @Html.Partial("_ProduktyList")
 
