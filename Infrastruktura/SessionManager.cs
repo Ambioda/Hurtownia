@@ -16,7 +16,7 @@ namespace Hurtownia.Infrastruktura
             session = HttpContext.Current.Session;
         }
 
-        public T GeT<T>(string key)
+        public T Get<T>(string key)
         {
             return (T)session[key];
         }

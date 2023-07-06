@@ -19,13 +19,13 @@ namespace Hurtownia.Infrastruktura
         public List<PozycjaKoszyka> PobierzKoszyk()
         {
             List<PozycjaKoszyka> koszyk;
-            if (session.GeT<List<PozycjaKoszyka>>(Consts.KoszykSessionKey)==null)
+            if (session.Get<List<PozycjaKoszyka>>(Consts.KoszykSessionKey)==null)
             {
                 koszyk = new List<PozycjaKoszyka>();
             }
             else
             {
-                koszyk = session.GeT<List<PozycjaKoszyka>>(Consts.KoszykSessionKey) as List<PozycjaKoszyka>;
+                koszyk = session.Get<List<PozycjaKoszyka>>(Consts.KoszykSessionKey) as List<PozycjaKoszyka>;
             }
             return koszyk;
         }

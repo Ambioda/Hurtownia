@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sklep Internetowy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script sec="~/Content/src/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="~/Content/src/bootstrap.min.js"></script>
     <link href="~/Content/src/strona.css" rel="stylesheet" />
     @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
             </ul>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Koszyk <span class="badge badge-light">0</span></button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Koszyk <span class="badge badge-light" id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")</span></button>
             <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">Logowanie</button>
         </div>
     </nav>
@@ -40,7 +40,6 @@
         </div>
     </footer>
     @RenderSection("Scripts", required : false)
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
