@@ -5,10 +5,11 @@ using System.Web;
 using System.Data.Entity;
 using Hurtownia.Models;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Hurtownia.DAL
 {
-    public class ProduktyContext : DbContext
+    public class ProduktyContext : IdentityDbContext<ApplicationUser>
     {
         public ProduktyContext() : base("ProduktyContext")
         {
@@ -17,6 +18,11 @@ namespace Hurtownia.DAL
         static ProduktyContext()
         {
             Database.SetInitializer<ProduktyContext>(new ProduktyInitializer());
+        }
+
+        public static ProduktyContext Create()
+        {
+            return new ProduktyContext();
         }
         public DbSet<Produkt> Produkty { get; set; }
         public DbSet<Kategoria> Kategorie { get; set; }

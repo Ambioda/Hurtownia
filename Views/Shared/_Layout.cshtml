@@ -21,7 +21,7 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Koszyk <span class="badge badge-light" id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")</span></button>
-            <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">Logowanie</button>
+            <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">@Html.Partial("_LoginPartial")</button>
         </div>
     </nav>
 

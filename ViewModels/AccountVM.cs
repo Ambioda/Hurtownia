@@ -28,7 +28,6 @@ namespace Hurtownia.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Prosze wprowadzic hasło")]
-        [StringLength(30, ErrorMessage = "{0} musi miec co najmniej {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
