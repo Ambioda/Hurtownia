@@ -1,6 +1,14 @@
-﻿using System;
+﻿using Hurtownia.App_Start;
+using Hurtownia.DAL;
+using Hurtownia.Infrastruktura;
+using Hurtownia.Models;
+using Hurtownia.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,14 +16,110 @@ namespace Hurtownia.Controllers
 {
     public class KoszykController : Controller
     {
+        private KoszykMenager koszykMenager;
+        private ISessionManager sessionManager { get; set; }
+        private ProduktyContext db;
+
+        public KoszykController()
+        {
+            db = new ProduktyContext();
+            sessionManager = new SessionMenager();
+            koszykMenager = new KoszykMenager(sessionManager, db);
+        }
         // GET: Koszyk
         public ActionResult Index()
         {
-            return View();
+            var pozycjeKoszyka = koszykMenager.PobierzKoszyk();
+            var cenaCalkowita = koszykMenager.PobierzWartoscKoszyka();
+
+            KoszykViewModel koszykVM = new KoszykViewModel()
+            {
+                PozycjeKoszyka = pozycjeKoszyka,
+                CenaCalkowita = cenaCalkowita
+            };
+
+            return View(koszykVM);
         }
-        public ActionResult DodajDoKoszyka(string Id)
+        public ActionResult DodajDoKoszyka(int Id)
+        {
+            koszykMenager.DodajDoKoszyka(Id);
+
+            return RedirectToAction("Index");
+        }
+
+        public int PobierzIloscElementowKoszyka()
+        {
+            return koszykMenager.PobierzIloscPozycjiKoszyka();
+        }
+        public ActionResult UsunZKoszyka(int produktId)
+        {
+            int iloscPozycji = koszykMenager.UsunZKoszyka(produktId);
+            int iloscPozycjiKoszyka = koszykMenager.PobierzIloscPozycjiKoszyka();
+            decimal wartoscKoszyka = koszykMenager.PobierzWartoscKoszyka();
+
+            var result = new KoszykUsuwanieVM
+            {
+                IdPozycjiUsuwanej = produktId,
+                IloscPozycjiUsuwanej = iloscPozycji,
+                KoszykCenaCalkowita = wartoscKoszyka,
+                KoszykIloscPozycji = iloscPozycjiKoszyka
+            };
+            return Json(result);
+        }
+        public async Task<ActionResult> Zaplac()
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                var zamowienie = new Zamowienie
+                {
+                    Imie = user.DaneUzytkownika.Imie,
+                    Nazwisko = user.DaneUzytkownika.Nazwisko,
+                    Adres = user.DaneUzytkownika.Adres,
+                    Miasto = user.DaneUzytkownika.Miasto,
+                    KodPocztowy = user.DaneUzytkownika.Kod_Pocztowy,
+                    Email = user.DaneUzytkownika.Email,
+                    Telefon = user.DaneUzytkownika.Telefon
+                };
+                return View(zamowienie);
+            }
+            else
+                return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Zaplac", "Koszyk") });
+        }
+        [HttpPost]
+        public async Task<ActionResult> Zaplac(Zamowienie zamowienieSzczegoly)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var newOrder = koszykMenager.UtworzZamowienie(zamowienieSzczegoly, userId);
+                var user = await UserManager.FindByIdAsync(userId);
+                TryUpdateModel(user.DaneUzytkownika);
+                await UserManager.UpdateAsync(user);
+                koszykMenager.PustyKoszyk();
+                return RedirectToAction("PotwierdzenieZamowienia");
+
+            }
+            else
+                return View(zamowienieSzczegoly);
+        }
+        public ActionResult PotwierdzenieZamowienia()
         {
             return View();
+        }
+
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
         }
     }
 }

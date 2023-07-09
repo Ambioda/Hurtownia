@@ -16,3 +16,7 @@ textarea {
     max-width: 280px;
 }
 
+.form-inline {
+    display: flex;
+    justify-content: flex-end; /* Wyrównuje zawartość do prawej strony */
+}

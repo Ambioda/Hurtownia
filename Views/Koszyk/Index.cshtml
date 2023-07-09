@@ -1,0 +1,86 @@
+﻿@model Hurtownia.ViewModels.KoszykViewModel
+@using Hurtownia.Infrastruktura
+@{
+    ViewBag.Title = "Koszyk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-5">
+    <h2>Koszyk</h2>
+    <table class="table table-striped">
+        <thead>
+
+            <tr>
+                <th scope="col">Obrazek</th>
+                <th scope="col">Nazwa produktu</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Ilość</th>
+                <th scope="col">Usuń pozycję</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
+            {
+                <tr id="koszyk-wiersz-@pozycjaKoszyka.Produkt.ProduktId">
+                    <td><a href="@Url.Action("Szczegoly", "Produkty", new {id = pozycjaKoszyka.Produkt.ProduktId })"></a></td>
+
+                    <td><a href="@Url.Action("Szczegoly", "Produkty", new { id = pozycjaKoszyka.Produkt.ProduktId })">@pozycjaKoszyka.Produkt.NazwaProduktu </a></td>
+                    <td>@string.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</td>
+                    <td><span id="koszyk-ilosc-pozycji-@pozycjaKoszyka.Produkt.ProduktId">@pozycjaKoszyka.Ilosc</span></td>
+                    <td><a class="usunKurs" data-id="@pozycjaKoszyka.Produkt.ProduktId" href="#" role="button">Usuń</a></td>
+                </tr>
+            }
+
+
+            </td>
+
+        </tbody>
+
+    </table>
+    <center><H2 id="koszyk-empty-message" class="@if (Model.PozycjeKoszyka != null && Model.PozycjeKoszyka.Count > 0) { <text> hidden </text> }">Twój koszyk jest pusty.</H2></center>
+    <div class="d-flex justify-content-between align-items-center">
+        <a class="btn btn-primary" href="/powrot-do-zakupow" role="button">Powróć do zakupów</a>
+        <div class="d-flex align-items-center">
+            <span id="calkowita-cena-wartosc">@string.Format("{0:0.##}", Model.CenaCalkowita)</span>zł
+
+            <a class="btn btn-success @if (Model.CenaCalkowita <= 0) { <text> hidden </text> }" id="koszyk-button-zaplac" href="@Url.Action("Zaplac","Koszyk")" role="button">Zapłać teraz</a>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryandJqueryUI")
+<script type="text/javascript">
+    $(function () {
+        $(".usunKurs").click(function () {
+
+            var recordDoUsuniecia = $(this).attr("data-id");
+
+            if (recordDoUsuniecia != '') {
+                $.post("/Koszyk/UsunZKoszyka", { "produktId": recordDoUsuniecia },
+                    function (response) {
+                        if (response.IloscPozycjiUsuwanej == 0) {
+
+                            $('#koszyk-wiersz-' + response.IdPozycjiUsuwanej).fadeOut('slow', function () {
+                                if (response.KoszykIloscPozycji == 0) {
+                                    $("#koszyk-empty-message").removeClass("hidden");
+                                }
+                            });
+                        } else {
+                            $('#koszyk-ilosc-pozycji-' + response.IdPozycjiUsuwanej).text(response.IloscPozycjiUsuwanej);
+                        }
+                        if (response.KoszykIloscPozycji == 0) {
+                            $('#koszyk-button-zaplac').addClass('hidden');
+                            $('#CenaCalkowita').addClass('invisible');
+                        }
+                        $('#calkowita-cena-wartosc').text(response.KoszykCenaCalkowita);
+                        $('#koszyk-naglowek-ilosc-elementow').text(response.KoszykIloscPozycji);
+                    });
+        return false;
+    }
+});
+    });
+</script>
+    }
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
