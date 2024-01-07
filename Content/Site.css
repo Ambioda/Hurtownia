@@ -19,3 +19,6 @@ textarea {
     display: none;
 }
 
+.visible {
+    display: block;
+}

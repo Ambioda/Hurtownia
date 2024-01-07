@@ -21,6 +21,12 @@
 .ui-widget .ui-widget {
 	font-size: 1em;
 }
+.noweZamowienie {
+	background-color: #c8e6c9;
+}
+.zamowienie.hidden {
+	display: none;
+}
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,

@@ -4,12 +4,10 @@
 }
 
 
-
-
 <div class="container mt-4">
     <div class="container mt-4">
         <form id="search-form" class="form-inline" data-ajax="true" data-ajax-url="@Url.Action("_ProduktyList")" method="get">
-            <input class="form-control mr-sm-2" type="search" id="search-form" name="searchQuery" placeholder="Wyszukaj">
+            <input class="form-control mr-sm-2" type="search" id="search-query" name="searchQuery" placeholder="Wyszukaj w kategori..." data-autocomplete-source="@Url.Action("ProduktyPodpowiedzi")" />
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
         </form>
     </div>
@@ -24,27 +22,22 @@
 
 @section Scripts
 {
-    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryandJqueryUI")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndJqueryUI")
     <script>
         $(function () {
-
-            var ajaxSubmit = function () {
-                var $form = $(this);
-                var settings = {
-                    data: $(this).serialize(),
-                    url: $(this).attr("action"),
-                    type: $(this).attr("method")
+            var setupAutoComplete = function () {
+                var $input = $(this);
+                var options = {
+                    source: $input.attr("data-autocomplete-source"),
+                    select: function (event, ui) {
+                        $input.val(ui.item.label);
+                        var $form = $input.parents("form:first");
+                        $form.submit();
+                    }
                 };
-                $.ajax(settings).done(function (result) {
-                    var $targetElement = $($form.data("ajax-target"));
-                    var $newContent = $(result);
-                    $targetElement.replaceWith($newContent);
-                    $newContent.effect("slide");
-                });
-                return false;
+                $input.autocomplete(options);
             };
-
-            $("#search-form").submit(ajaxSubmit);
+            $("#search-query").each(setupAutoComplete);
         });
     </script>
 }

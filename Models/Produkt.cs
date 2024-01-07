@@ -22,7 +22,9 @@ namespace Hurtownia.Models
         public bool Bestseller { get; set; }
         public bool Ukryty { get; set; }
         public string OpisSkrocony { get; set; }
-
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Ilość musi być liczbą nieujemną")]
+        public int DostepnaIlosc { get; set; }
         public virtual Kategoria Kategoria { get; set; }
     }
 }

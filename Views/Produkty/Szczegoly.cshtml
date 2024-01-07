@@ -19,22 +19,27 @@
                     </div>
                     <div class="col-md-6">
                         <h4>Cena: <span class="text-muted">@Model.CenaProduktu - zł</span></h4>
-                        <h5>Ilość dostępna: <span class="text-muted">0 szt.</span></h5>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-                                onclick="location.href='@Url.Action("DodajDoKoszyka", "Koszyk", new { id = Model.ProduktId })'">
-                            Kup za @Model.CenaProduktu zł
-                        </button>
+                        <h5>Ilość dostępna: <span class="text-muted">@Model.DostepnaIlosc szt.</span></h5>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" href="@Url.Action("DodajProdukt", "Zarzadzanie", new {produktId = Model.ProduktId})"> Edytuj</a>
+                        }
+
+                        @using (Html.BeginForm("DodajDoKoszyka", "Koszyk", new { id = Model.ProduktId }))
+                        {
+                            <input type="number" name="ilosc" min="1" max="@Model.DostepnaIlosc" value="1" class="form-control mb-2" />
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                Kup za @Model.CenaProduktu zł
+                            </button>
+                        }
                     </div>
                     <h2>Opis produktu:</h2>
-                    
-                        <div class="col-md-4">
-                    @Model.OpisProduktu
-                        
-                        </div>
+                    <div class="col-md-4">
+                        @Model.OpisProduktu
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-

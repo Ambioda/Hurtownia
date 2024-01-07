@@ -59,8 +59,8 @@
     <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.AspNetCache, Version=0.9.9.35094, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Glimpse.AspNetCache.0.9.9.35094\lib\net35\Glimpse.AspNetCache.dll</HintPath>
+    <Reference Include="Glimpse.AspNetCache, Version=0.9.9.25002, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.AspNetCache.0.9.9.25002\lib\net35\Glimpse.AspNetCache.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
@@ -120,6 +120,9 @@
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Razor.3.3.0-preview1\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -136,9 +139,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Web.Razor">
-      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Webpages">
       <HintPath>packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.dll</HintPath>
     </Reference>
@@ -301,6 +301,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KoszykController.cs" />
     <Compile Include="Controllers\ProduktyController.cs" />
+    <Compile Include="Controllers\ZarzadzanieController.cs" />
     <Compile Include="DAL\ProduktyContext.cs" />
     <Compile Include="DAL\ProduktyInitializer.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -333,6 +334,10 @@
     <Compile Include="Migrations\202307061616291_zam.Designer.cs">
       <DependentUpon>202307061616291_zam.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401051316392_Poprawki.cs" />
+    <Compile Include="Migrations\202401051316392_Poprawki.Designer.cs">
+      <DependentUpon>202401051316392_Poprawki.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -344,9 +349,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountVM.cs" />
+    <Compile Include="ViewModels\EdytujProduktViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\KoszykUsuwanieVM.cs" />
     <Compile Include="ViewModels\KoszykViewModel.cs" />
+    <Compile Include="ViewModels\ZarzadzanieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -381,6 +388,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Koszyk\Zaplac.cshtml" />
     <Content Include="Views\Koszyk\PotwierdzenieZamowienia.cshtml" />
+    <Content Include="Views\Zarzadzanie\Index.cshtml" />
+    <Content Include="Views\Shared\_ZarzadzajLayout.cshtml" />
+    <Content Include="Views\Zarzadzanie\Error.cshtml" />
+    <Content Include="Views\Zarzadzanie\HistoriaZamowien.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\Koszyk\ProduktNiedostepny.cshtml" />
+    <Content Include="Views\Koszyk\Podsumowanie.cshtml" />
+    <Content Include="Views\Zarzadzanie\DodajProdukt.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -405,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307061616291_zam.resx">
       <DependentUpon>202307061616291_zam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401051316392_Poprawki.resx">
+      <DependentUpon>202401051316392_Poprawki.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

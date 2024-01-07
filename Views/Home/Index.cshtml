@@ -31,7 +31,7 @@
                         <th>Nazwa przedmiotu</th>
                         <th>Opis</th>
                         <th>Cena</th>
-                        <th>Kup</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
                             <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = bestseller.ProduktId })"> @bestseller.NazwaProduktu</a></td>
                             <td>@bestseller.OpisSkrocony</td>
                             <td>@bestseller.CenaProduktu</td>
-                            <td><a href="@Url.Action("DodajDoKoszyka", "Koszyk", new { Id= bestseller.ProduktId })"><button class="btn btn-primary">Kup teraz</button></a></td>
+                            <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = bestseller.ProduktId })"> <button class="btn btn-primary">Szczegóły</button></a></td>
                         </tr>
                     }
                 </tbody>
@@ -57,7 +57,7 @@
                         <th>Nazwa przedmiotu</th>
                         <th>Opis</th>
                         <th>Cena</th>
-                        <th>Kup</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@
                             <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = nowosc.ProduktId })"> @nowosc.NazwaProduktu</a></td>
                             <td>@nowosc.OpisSkrocony</td>
                             <td>@nowosc.CenaProduktu</td>
-                            <td><a href="@Url.Action("DodajDoKoszyka", "Koszyk", new { Id= nowosc.ProduktId })"><button class="btn btn-primary">Kup teraz</button></a></td>
+                            <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = nowosc.ProduktId })"><button class="btn btn-primary">Szczegóły</button></a></td>
                         </tr>
                     }
                 </tbody>

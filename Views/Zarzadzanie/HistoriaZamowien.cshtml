@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Hurtownia.Models.Zamowienie>
+@{
+    ViewBag.Title = "HistoriaZamowien";
+    Layout = "~/Views/Shared/_ZarzadzajLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2>Historia Zamówień</h2>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Numer Zamówienia</th>
+                    <th>Data Dodania</th>
+                    <th>Dane wysyłki</th>
+                    <th>Uwagi do zamowienia</th>
+                    <th>Suma</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var zamowienie in Model)
+                {
+                    <tr @if (zamowienie.StanZamowienia == Hurtownia.Models.StanZamowienia.Nowe) { <text> class="noweZamowienie" </text> }>
+                        <td>@zamowienie.ZamowienieId</td>
+                        <td>@zamowienie.DataDodania</td>
+                        <td>@zamowienie.Imie,<br /> @zamowienie.Nazwisko <br /> @zamowienie.KodPocztowy<br /> @zamowienie.Miasto</td>
+                        <td>@zamowienie.Komentarz</td>
+                        <td>@zamowienie.WartoscZamowienia</td>
+                        <td>
+                            @if (ViewBag.UserIsAdmin)
+                            {
+                                using (Html.BeginForm("ZmianaStanuZamowienia", "Zarzadzanie"))
+                                {
+                                    @Html.HiddenFor(x => zamowienie.ZamowienieId)
+                                    @Html.EnumDropDownListFor(x => zamowienie.StanZamowienia, new { @class = "StanZamowieniaZmien" })
+                                }
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(x => zamowienie.StanZamowienia)
+                            }
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailsModal" onclick="showDetails('@zamowienie.ZamowienieId')">Szczegóły</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Brak dostępnych zamówień.
+        </div>
+    }
+</div>
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Szczegóły Zamówienia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID Produktu</th>
+                            <th>Nazwa Produktu</th>
+                            <th>Ilość</th>
+                            <th>Cena produktu</th>
+                            <th>Suma</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modalBodyContent">
+                
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script>
+        function showDetails(zamowienieId) {
+            $.ajax({
+                url: '/Zarzadzanie/Szczegoly/' + zamowienieId, 
+                method: 'GET',
+                success: function (data) {
+                    var modalBodyContent = '';
+                    data.PozycjeZamowienia.forEach(function (pozycja) {
+                        var nazwaProduktu = pozycja.produkt ? pozycja.produkt.NazwaProduktu : 'Nieznany produkt';
+                        modalBodyContent += '<tr>' +
+                            '<td>' + pozycja.ProduktId + '</td>' +
+                            '<td>' + pozycja.NazwaProduktu + '</td>' +
+                            '<td>' + pozycja.Ilosc + '</td>' +
+                            '<td>' + pozycja.CenaZakupu + '</td>' +
+                            '<td>' + (pozycja.Ilosc * pozycja.CenaZakupu) + '</td>' +
+                            '</tr>';
+                    });
+                    $('#modalBodyContent').html(modalBodyContent);
+                    $('#detailsModal').modal('show');
+                },
+                error: function (error) {
+                    console.error("Wystąpił błąd: ", error);
+                }
+            });
+        }
+		        $(".StanZamowieniaZmien").on('change', function (e) {
+            var form = $(this).closest("form");
+            var tr = $(this).closest("tr");
+            var actionUrl = form.attr("action");
+            var serializedForm = form.serialize();
+
+            $.post(actionUrl, serializedForm).done(function (data) {
+                if (data === '@Hurtownia.Models.StanZamowienia.Nowe.ToString()') {
+                    tr.addClass("noweZamowienie");
+                } else {
+                    tr.removeClass("noweZamowienie");
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Błąd: " + textStatus + ", " + errorThrown);
+            });
+        });
+    </script>
+}

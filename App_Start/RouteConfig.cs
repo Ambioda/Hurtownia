@@ -31,7 +31,14 @@ defaults: new { controller = "Produkty", action = "Szczegoly" });
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+
             );
+            routes.MapRoute(
+    name: "Zarzadzanie",
+    url: "Zarzadzanie/{action}/{id}",
+    defaults: new { controller = "Zarzadzanie", action = "Index", id = UrlParameter.Optional }
+);
+
         }
     }
 }

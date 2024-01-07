@@ -10,13 +10,14 @@ namespace Hurtownia.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Hurtownia.DAL.ProduktyContext";
         }
 
         protected override void Seed(Hurtownia.DAL.ProduktyContext context)
         {
             ProduktyInitializer.SeedProduktyData(context);
+            ProduktyInitializer.SeedUzytkownicy(context);
         }
     }
 }

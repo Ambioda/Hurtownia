@@ -21,12 +21,12 @@
             @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
             {
                 <tr id="koszyk-wiersz-@pozycjaKoszyka.Produkt.ProduktId">
-                    <td><a href="@Url.Action("Szczegoly", "Produkty", new {id = pozycjaKoszyka.Produkt.ProduktId })"></a></td>
+                    <td><a href="@Url.Action("Szczegoly", "Produkty", new {id = pozycjaKoszyka.Produkt.ProduktId })"><img src="@Url.Content("~/Content/img/" + pozycjaKoszyka.Produkt.NazwaPlikuObrazka)" width="100" height="50" /></a></td>
 
                     <td><a href="@Url.Action("Szczegoly", "Produkty", new { id = pozycjaKoszyka.Produkt.ProduktId })">@pozycjaKoszyka.Produkt.NazwaProduktu </a></td>
                     <td>@string.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</td>
                     <td><span id="koszyk-ilosc-pozycji-@pozycjaKoszyka.Produkt.ProduktId">@pozycjaKoszyka.Ilosc</span></td>
-                    <td><a class="usunKurs" data-id="@pozycjaKoszyka.Produkt.ProduktId" href="#" role="button">Usuń</a></td>
+                    <td><a class="usunProdukt" data-id="@pozycjaKoszyka.Produkt.ProduktId" href="#" role="button">Usuń</a></td>
                 </tr>
             }
 
@@ -35,52 +35,61 @@
 
         </tbody>
 
-    </table>
-    <center><H2 id="koszyk-empty-message" class="@if (Model.PozycjeKoszyka != null && Model.PozycjeKoszyka.Count > 0) { <text> hidden </text> }">Twój koszyk jest pusty.</H2></center>
+    </table>  <center>
+        @if (Model.PozycjeKoszyka.Count == 0)
+        {
+            <H2 id="koszyk-empty-message">
+                Twój koszyk jest pusty.
+            </H2>
+        }
+    </center>
     <div class="d-flex justify-content-between align-items-center">
-        <a class="btn btn-primary" href="/powrot-do-zakupow" role="button">Powróć do zakupów</a>
+        <a class="btn btn-primary" href="/#" role="button">Powróć do zakupów</a>
         <div class="d-flex align-items-center">
-            <span id="calkowita-cena-wartosc">@string.Format("{0:0.##}", Model.CenaCalkowita)</span>zł
 
-            <a class="btn btn-success @if (Model.CenaCalkowita <= 0) { <text> hidden </text> }" id="koszyk-button-zaplac" href="@Url.Action("Zaplac","Koszyk")" role="button">Zapłać teraz</a>
+
+
+            @if (Model.CenaCalkowita > 0)
+            {
+                <div class="text-right">
+                    <h4>Całkowita cena: @Model.CenaCalkowita zł</h4>
+                </div>
+                <td></td>
+                <a class="btn btn-success" href="@Url.Action("Podsumowanie", "Koszyk")">Podsumowanie Zakupów</a>
+            }
         </div>
-    </div>
-
+        </div>
 </div>
-@section Scripts{
+
+@section Scripts {
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryandJqueryUI")
-<script type="text/javascript">
-    $(function () {
-        $(".usunKurs").click(function () {
+    <script type="text/javascript">
+        $(function () {
+            $(".usunProdukt").click(function () {
+                var produktIdDoUsuniecia = $(this).attr("data-id");
 
-            var recordDoUsuniecia = $(this).attr("data-id");
+                if (produktIdDoUsuniecia != '') {
+                    $.post("/Koszyk/UsunZKoszyka", { "produktId": produktIdDoUsuniecia },
+                        function (response) {
+                            if (response.OK) {
+                                $('#koszyk-wiersz-' + produktIdDoUsuniecia).fadeOut('slow', function () {
+                                    $(this).remove();
+                                    $('#calkowita-cena-wartosc').text(response.KoszykCenaCalkowita);
 
-            if (recordDoUsuniecia != '') {
-                $.post("/Koszyk/UsunZKoszyka", { "produktId": recordDoUsuniecia },
-                    function (response) {
-                        if (response.IloscPozycjiUsuwanej == 0) {
+                                    if (response.KoszykIloscPozycji == 0) {
+                                        $("#koszyk-empty-message").show();
+                                        $('#koszyk-button-zaplac').hide();
+                                    }
+                                });
+                            } 
+                        }, "json")
+                    return false;
+                }
+            });
+        });
+    </script>
 
-                            $('#koszyk-wiersz-' + response.IdPozycjiUsuwanej).fadeOut('slow', function () {
-                                if (response.KoszykIloscPozycji == 0) {
-                                    $("#koszyk-empty-message").removeClass("hidden");
-                                }
-                            });
-                        } else {
-                            $('#koszyk-ilosc-pozycji-' + response.IdPozycjiUsuwanej).text(response.IloscPozycjiUsuwanej);
-                        }
-                        if (response.KoszykIloscPozycji == 0) {
-                            $('#koszyk-button-zaplac').addClass('hidden');
-                            $('#CenaCalkowita').addClass('invisible');
-                        }
-                        $('#calkowita-cena-wartosc').text(response.KoszykCenaCalkowita);
-                        $('#koszyk-naglowek-ilosc-elementow').text(response.KoszykIloscPozycji);
-                    });
-        return false;
-    }
-});
-    });
-</script>
-    }
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

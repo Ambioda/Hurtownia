@@ -8,9 +8,9 @@
             <tr>
                 <th>Obrazek</th>
                 <th>Nazwa przedmiotu</th>
-                <th>Opis</th>
+                <th>Opis Skrócony</th>
                 <th>Cena</th>
-                <th>Kup</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
                     <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = produkt.ProduktId })"> @produkt.NazwaProduktu</a></td>
                     <td>@produkt.OpisSkrocony</td>
                     <td>@produkt.CenaProduktu</td>
-                    <td><a href="@Url.Action("DodajDoKoszyka", "Koszyk", new { Id = produkt.ProduktId })"><button class="btn btn-primary">Kup teraz</button></a></td>
+                    <td><a href="@Url.Action("Szczegoly", "Produkty", new { Id = produkt.ProduktId })"><button class="btn btn-primary">Szczegóły</button></a></td>
                 </tr>
 
             }

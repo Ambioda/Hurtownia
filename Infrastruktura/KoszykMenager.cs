@@ -29,23 +29,26 @@ namespace Hurtownia.Infrastruktura
             }
             return koszyk;
         }
-        public void DodajDoKoszyka(int produktId)
+        public void DodajDoKoszyka(int produktId, int ilosc)
         {
             var koszyk = PobierzKoszyk();
             var pozycjaKoszyka = koszyk.Find(k => k.Produkt.ProduktId == produktId);
+
             if (pozycjaKoszyka != null)
-                pozycjaKoszyka.Ilosc++;
+            {
+                pozycjaKoszyka.Ilosc += ilosc;
+            }
             else
             {
                 var produktDoDodania = db.Produkty.Where(k => k.ProduktId == produktId).SingleOrDefault();
 
-                if(produktDoDodania != null)
+                if (produktDoDodania != null)
                 {
                     var nowaPozycjaKoszyka = new PozycjaKoszyka()
                     {
                         Produkt = produktDoDodania,
-                        Ilosc = 1,
-                        Wartosc = produktDoDodania.CenaProduktu
+                        Ilosc = ilosc,
+                        Wartosc = produktDoDodania.CenaProduktu * ilosc
                     };
                     koszyk.Add(nowaPozycjaKoszyka);
                 }
@@ -91,6 +94,7 @@ namespace Hurtownia.Infrastruktura
             if (noweZamowienie.PozycjeZamowienia == null)
                 noweZamowienie.PozycjeZamowienia = new List<PozycjaZamowienia>();
             decimal koszykWartosc = 0;
+
             foreach (var koszykElement in koszyk)
             {
                 var nowaPozycjaZamowienia = new PozycjaZamowienia()
@@ -100,12 +104,26 @@ namespace Hurtownia.Infrastruktura
                     CenaZakupu = koszykElement.Produkt.CenaProduktu
                 };
                 koszykWartosc += (koszykElement.Ilosc * koszykElement.Produkt.CenaProduktu);
+
+                var produkt = db.Produkty.FirstOrDefault(p => p.ProduktId == koszykElement.Produkt.ProduktId);
+
+                if (produkt != null)
+                {
+                    if (produkt.DostepnaIlosc >= koszykElement.Ilosc)
+                    {
+                        produkt.DostepnaIlosc -= koszykElement.Ilosc;
+                    }
+                }
+
                 noweZamowienie.PozycjeZamowienia.Add(nowaPozycjaZamowienia);
             }
+
             noweZamowienie.WartoscZamowienia = koszykWartosc;
             db.SaveChanges();
             return noweZamowienie;
         }
+
+
         public void PustyKoszyk()
         {
             session.Set<List<PozycjaKoszyka>>(Consts.KoszykSessionKey, null);

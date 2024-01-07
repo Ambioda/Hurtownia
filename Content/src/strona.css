@@ -16,5 +16,9 @@ body {
 .footer {
     background-color: #f5f5f5;
     padding: 10px 0;
-    margin-top: auto; /* Dodajemy to, aby stopka była na dole */
+    margin-top: auto; 
+}
+.my-hidden {
+    display: none;
+    background-color: red;
 }

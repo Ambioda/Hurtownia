@@ -10,7 +10,7 @@ namespace Hurtownia.Controllers
     public class ProduktyController : Controller
     {
         private ProduktyContext db = new ProduktyContext();
-        // GET: Produkty
+  
         public ActionResult Index()
         {
             return View();
@@ -38,6 +38,11 @@ namespace Hurtownia.Controllers
             var kategorie = db.Kategorie.ToList();
             return PartialView("_KategorieMenu",kategorie);
         }
-
+       public ActionResult ProduktyPodpowiedzi(string term)
+        {
+            var produkt = db.Produkty.Where(a => !a.Ukryty && a.NazwaProduktu.ToLower().Contains(term.ToLower()))
+                .Take(5).Select(a => new { label = a.NazwaProduktu });
+            return Json(produkt, JsonRequestBehavior.AllowGet);
+        }
     }
 }

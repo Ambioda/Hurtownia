@@ -1,0 +1,84 @@
+﻿@model Hurtownia.ViewModels.EdytujProduktViewModel
+@{
+    ViewBag.Title = "DodajProdukt";
+    Layout = "~/Views/Shared/_ZarzadzajLayout.cshtml";
+}
+
+<h2>Edytuj produkt</h2>
+<div>
+    @if (Model.Potwierdzenie.HasValue && Model.Potwierdzenie.Value)
+    {
+        <div class="alert alert-info">
+            Pomyślnie wprowadzono zmiany!
+        </div>
+    }
+    @using (Html.BeginForm("DodajProdukt", "Zarzadzanie", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="error-summary-centered">
+            @Html.ValidationSummary()
+        </div>
+        @Html.HiddenFor(o => o.Produkt.ProduktId)
+        @Html.HiddenFor(o => o.Produkt.DataDodania)
+        @Html.HiddenFor(o => o.Produkt.NazwaPlikuObrazka)
+<div class="container mt-5">
+    <div class="form-group">
+        @Html.LabelFor(m => m.Produkt.NazwaProduktu, "Nazwa Produktu")
+        @Html.TextBoxFor(m => m.Produkt.NazwaProduktu, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Produkt.KategoriaId, "Kategoria")
+        @Html.DropDownListFor(m => m.Produkt.KategoriaId, new SelectList(Model.Kategorie, "KategoriaId", "NazwaKategorii"), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Produkt.OpisSkrocony, "Opis Skrócony")
+        @Html.TextBoxFor(m => m.Produkt.OpisSkrocony, new { @class = "form-control" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Produkt.OpisProduktu, "Opis Produktu")
+        @Html.TextAreaFor(m => m.Produkt.OpisProduktu, new { @class = "form-control", rows = 10 })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Produkt.DostepnaIlosc, "Podaj dostępną ilość")
+        @Html.TextBoxFor(m => m.Produkt.DostepnaIlosc, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Produkt.CenaProduktu, "Podaj Cenę produktu")
+        @Html.TextBoxFor(m => m.Produkt.CenaProduktu, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="Bestseller">Czy produkt jest Bestsellerem?</label>
+        <select class="form-control" id="Bestseller" name="Produkt.Bestseller">
+            <option value="True" @(Model.Produkt.Bestseller ? "selected" : "")>Tak</option>
+            <option value="False" @(!Model.Produkt.Bestseller ? "selected" : "")>Nie</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Ukryty">Czy produkt jest Ukryty?</label>
+        <select class="form-control" id="Ukryty" name="Produkt.Ukryty">
+            <option value="True" @(Model.Produkt.Bestseller ? "selected" : "")>Tak</option>
+            <option value="False" @(!Model.Produkt.Bestseller ? "selected" : "")>Nie</option>
+        </select>
+    </div>
+
+    @if (ViewBag.EditMode == null || !ViewBag.EditMode)
+    {
+        <div class="form-group">
+            <label for="nazwaPlikuObrazka">Zdjęcie produktu</label>
+            <input type="file" class="form-control-file" id="nazwaPlikuObrazka" name="file">
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+</div>
+
+
+
+    }
+</div>
+<tr></tr>

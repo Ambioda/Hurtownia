@@ -1,0 +1,45 @@
+﻿@model Hurtownia.ViewModels.KoszykViewModel
+@using Hurtownia.Infrastruktura
+@{
+    ViewBag.Title = "KoszykPodsumowanie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2>Podsumowanie Zamówienia</h2>
+    @if (Model.PozycjeKoszyka.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nazwa produktu</th>
+                    <th>Ilość</th>
+                    <th>Cena</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pozycja in Model.PozycjeKoszyka)
+                {
+                    <tr>
+                        <td>@pozycja.Produkt.NazwaProduktu</td>
+                        <td>@pozycja.Ilosc</td>
+                        <td>@pozycja.Wartosc zł</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-left">
+            <a class="btn btn-success" href="/koszyk">Powrót do koszyka</a>
+        </div>
+        <div class="text-right">
+            <h4>Całkowita cena: @Model.CenaCalkowita zł</h4>
+            <a class="btn btn-success" href="@Url.Action("Zaplac","Koszyk")">Kup Teraz</a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Twoje zamówienie jest puste. <a href="/#">Wróć, aby dokonać zakupu.</a>
+        </div>
+    }
+</div>

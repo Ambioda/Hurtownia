@@ -14,10 +14,13 @@
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="@Url.Content("~/")">Sklep Internetowy</a>
-        @if (User.Identity.IsAuthenticated )
-        {
-            <a class="btn btn-outline-primary my-2 my-sm-0 ml-2" href="/zarzadzanie">Zarzadzanie kontem</a>
-        }
+        <a     <div class="form-group">
+        <a class="btn btn-outline-primary my-2 my-sm-0 ml-2" href="@Url.Action("HistoriaZamowien", "Zarzadzanie")">Zamówienia</a>
+        @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-outline-primary my-2 my-sm-0 ml-2" href="@Url.Action("DodajProdukt", "Zarzadzanie")">Dodaj Produkt</a>
+            }
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

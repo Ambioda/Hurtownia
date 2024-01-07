@@ -26,7 +26,7 @@ namespace Hurtownia.Controllers
             sessionManager = new SessionMenager();
             koszykMenager = new KoszykMenager(sessionManager, db);
         }
-        // GET: Koszyk
+
         public ActionResult Index()
         {
             var pozycjeKoszyka = koszykMenager.PobierzKoszyk();
@@ -40,17 +40,46 @@ namespace Hurtownia.Controllers
 
             return View(koszykVM);
         }
-        public ActionResult DodajDoKoszyka(int Id)
+        public ActionResult ProduktNiedostepny()
         {
-            koszykMenager.DodajDoKoszyka(Id);
-
-            return RedirectToAction("Index");
+            return View();
         }
+        public ActionResult DodajDoKoszyka(int Id, int ilosc)
+        {
+            var produkt = db.Produkty.FirstOrDefault(p => p.ProduktId == Id);
+
+            if (produkt != null && produkt.DostepnaIlosc >= ilosc)
+            {
+                koszykMenager.DodajDoKoszyka(Id, ilosc);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["Error"] = "Produkt jest niedostępny lub podano zbyt dużą ilość.";
+                return RedirectToAction("ProduktNiedostepny");
+            }
+        }
+
 
         public int PobierzIloscElementowKoszyka()
         {
             return koszykMenager.PobierzIloscPozycjiKoszyka();
         }
+        
+            public ActionResult Podsumowanie()
+            {
+            var pozycjeKoszyka = koszykMenager.PobierzKoszyk();
+            var cenaCalkowita = koszykMenager.PobierzWartoscKoszyka();
+
+            var model = new KoszykViewModel
+            {
+                PozycjeKoszyka = pozycjeKoszyka,
+                CenaCalkowita = cenaCalkowita
+            };
+
+            return View(model);
+            }
+        
         public ActionResult UsunZKoszyka(int produktId)
         {
             int iloscPozycji = koszykMenager.UsunZKoszyka(produktId);

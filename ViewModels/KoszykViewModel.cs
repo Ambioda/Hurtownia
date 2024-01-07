@@ -12,4 +12,4 @@ namespace Hurtownia.ViewModels
         public List<PozycjaKoszyka> PozycjeKoszyka { get; set; }
         public decimal CenaCalkowita { get; set; }
     }
-}
+    }

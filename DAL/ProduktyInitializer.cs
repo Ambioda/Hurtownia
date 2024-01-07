@@ -6,9 +6,12 @@ using System.Linq;
 using System.Web;
 using Hurtownia.Migrations;
 using System.Data.Entity.Migrations;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Hurtownia.DAL
 {
+
     public class ProduktyInitializer : CreateDatabaseIfNotExists<Hurtownia.DAL.ProduktyContext>
     {
 
@@ -40,5 +43,32 @@ namespace Hurtownia.DAL
             produkty.ForEach(k => context.Produkty.AddOrUpdate(k));
             context.SaveChanges();
             }
+        public static void SeedUzytkownicy(ProduktyContext db)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            const string name = "admin@admin.pl";
+            const string password = "P@ssw0rd";
+            const string roleName = "Admin";
+
+            var user = userManager.FindByName(name);
+            if (user ==null)
+            {
+                user = new ApplicationUser { UserName = name, Email = name, DaneUzytkownika = new DaneUzytkownika() };
+                var result = userManager.Create(user, password);
+            }
+
+            var role = roleManager.FindByName(roleName);
+            if (role == null)
+            {
+                role = new IdentityRole(roleName);
+                var roleresult = roleManager.Create(role);
+            }
+            var rolesForUser = userManager.GetRoles(user.Id);
+            if (!rolesForUser.Contains(role.Name))
+            {
+                var result = userManager.AddToRole(user.Id, role.Name);
+            }
+        }
         }
     }
