@@ -108,6 +108,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -353,6 +359,8 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\KoszykUsuwanieVM.cs" />
     <Compile Include="ViewModels\KoszykViewModel.cs" />
+    <Compile Include="ViewModels\PotwierdzenieZamowieniaEmail.cs" />
+    <Compile Include="ViewModels\PotwierdzenieZmianyStatusu.cs" />
     <Compile Include="ViewModels\ZarzadzanieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -396,6 +404,13 @@
     <Content Include="Views\Koszyk\ProduktNiedostepny.cshtml" />
     <Content Include="Views\Koszyk\Podsumowanie.cshtml" />
     <Content Include="Views\Zarzadzanie\DodajProdukt.cshtml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\PotwierdzenieZamowienia.cshtml" />
+    <Content Include="Views\Emails\PotwierdzenieZamowienia.Text.cshtml" />
+    <Content Include="Views\Emails\PotwierdzenieZamowienia.Html.cshtml" />
+    <Content Include="Views\Emails\PotwierdzenieZmianyStatusu.Text.cshtml" />
+    <Content Include="Views\Emails\PotwierdzenieZmianyStatusu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

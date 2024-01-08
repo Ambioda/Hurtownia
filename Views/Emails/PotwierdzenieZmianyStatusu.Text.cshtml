@@ -1,0 +1,23 @@
+﻿@model Hurtownia.ViewModels.PotwierdzenieZmianyStatusu
+Content-Type: text/plain; charset=utf-8
+
+Dziękujemy za złożenie u nas zamówienia!
+
+Twoje zamówienie o numerze @Model.NumerZamowienia zmieniło status na: @GetStatusDescription(Model.StanZamowienia)!
+
+Dziękujemy i zapraszamy do dalszych zakupów na naszej stronie.
+
+@functions {
+    private string GetStatusDescription(int status)
+    {
+        switch (status)
+        {
+            case 1:
+                return "Zrealizowane";
+            case 0:
+                return "Nowe";
+            default:
+                return "Nieznany";
+        }
+    }
+}

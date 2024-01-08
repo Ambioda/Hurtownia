@@ -58,11 +58,10 @@
             </div>
         </div>
         <div class="form-group">
-           <td><label for="comment">Uwagi</label></td>
-            <td>
-                <textarea cols="40" rows="3" name="comment">@Model.Komentarz</textarea>
-            </td>
-            </div>
+            @Html.LabelFor(model => model.Komentarz)
+            @Html.TextAreaFor(model => model.Komentarz, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Komentarz)
+        </div>
         @Html.ValidationSummary()
         <hr style="margin-bottom: 50px;" />
         <div class="=selection-button-container">
