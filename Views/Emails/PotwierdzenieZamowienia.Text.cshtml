@@ -1,0 +1,66 @@
+﻿@model Hurtownia.ViewModels.PotwierdzenieZamowieniaEmail
+    Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Potwierdzenie zamówienia</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dziękujemy za złożenie u nas zamówienia!</h2>
+    <p>Twoje zamówienie niedługo zostanie wysłane.</p>
+
+    <h3>W zamówieniu znajduje się:</h3>
+    <table>
+        <tr>
+            <th>Nazwa Produktu</th>
+        </tr>
+        @foreach (var pozycja in Model.PozycjeZamowienia)
+        {
+            <tr>
+                <td>@pozycja.produkt.NazwaProduktu</td>
+            </tr>
+        }
+    </table>
+
+    <h3>Uwagi do zamówienia:</h3>
+    <p>@Model.Komentarz</p>
+
+    <h3>Informacje dotyczące przelewu:</h3>
+    <table>
+        <tr>
+            <td>Prosimy o przelanie kwoty @Model.Wartosc zł.</td>
+        </tr>
+        <tr>
+            <td>Pole tytułu przelewu proszę uzupełnić nr zamówienia <bold>@Model.NumerZamowienia</bold> na nasze konto:</td>
+        </tr>
+        <tr>
+            <td>
+                Hurtownia Hurtownia<br />
+                31-555 Rzeszów <br />
+                ul.Rzeszow12<br />
+                ING BANK ŚLĄSKI 0000 0000 0000 0000
+            </td>
+        </tr>
+    </table>
+
+    <p>Po otrzymaniu środków status przesyłki natychmiast się zmieni na zrealizowany i paczka wyruszy w drogę.</p>
+    <p>Dziękujemy i zapraszamy do dalszych zakupów na naszej stronie.</p>
+</body>
+</html>

@@ -108,8 +108,9 @@ namespace Hurtownia.Controllers
                     Miasto = user.DaneUzytkownika.Miasto,
                     KodPocztowy = user.DaneUzytkownika.Kod_Pocztowy,
                     Email = user.DaneUzytkownika.Email,
-                    Telefon = user.DaneUzytkownika.Telefon
+                    Telefon = user.DaneUzytkownika.Telefon,
                 };
+            
                 return View(zamowienie);
             }
             else
@@ -126,6 +127,15 @@ namespace Hurtownia.Controllers
                 TryUpdateModel(user.DaneUzytkownika);
                 await UserManager.UpdateAsync(user);
                 koszykMenager.PustyKoszyk();
+                var zamowienie = db.Zamowienia.Include("PozycjeZamowienia").Include("PozycjeZamowienia.Produkt").SingleOrDefault(o => o.ZamowienieId == newOrder.ZamowienieId);
+                PotwierdzenieZamowieniaEmail email = new PotwierdzenieZamowieniaEmail();
+                email.To = zamowienie.Email;
+                email.From = "ambioda12@interia.pl";
+                email.Wartosc = zamowienie.WartoscZamowienia;
+                email.NumerZamowienia = zamowienie.ZamowienieId;
+                email.PozycjeZamowienia = zamowienie.PozycjeZamowienia;
+                email.Komentarz = zamowienie.Komentarz;
+                email.Send();
                 return RedirectToAction("PotwierdzenieZamowienia");
 
             }

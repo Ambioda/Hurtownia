@@ -15,6 +15,7 @@ using System;
 using System.Net;
 using System.IO;
 using Hurtownia.Infrastruktura;
+using Postal;
 
 namespace Hurtownia.Controllers
 {
@@ -156,14 +157,30 @@ namespace Hurtownia.Controllers
             }
             return View(zamowieniaUzytkownika);
         }
+
+
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public StanZamowienia ZmianaStanuZamowienia(Zamowienie zamowienie)
+        public ActionResult ZmianaStanuZamowienia(Zamowienie zamowienie)
         {
             Zamowienie zamowienieDoModyfikacji = db.Zamowienia.Find(zamowienie.ZamowienieId);
             zamowienieDoModyfikacji.StanZamowienia = zamowienie.StanZamowienia;
+
+            if (!string.IsNullOrEmpty(zamowienieDoModyfikacji.Email))
+            {
+                PotwierdzenieZmianyStatusu email = new PotwierdzenieZmianyStatusu
+                {
+                    To = zamowienieDoModyfikacji.Email,
+                    From = "ambioda12@interia.pl",
+                    NumerZamowienia = zamowienie.ZamowienieId,
+                    StanZamowienia = (int)zamowienie.StanZamowienia
+                };
+                email.Send();
+            }
+
             db.SaveChanges();
-            return zamowienie.StanZamowienia;
+            return RedirectToAction("Index"); 
         }
         [HttpGet]
         public ActionResult Szczegoly(int id)

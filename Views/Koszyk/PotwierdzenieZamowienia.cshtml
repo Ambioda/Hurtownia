@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_RightSectionLayout.cshtml";
 }
 
-<div style="margin-top:100px; text-align:center">
-    Twoje zamowienie niedługo wyruszy w droge!
+
+<div class="container" style="margin-top: 100px; text-align: center;">
+    <h2>Potwierdzenie Zamówienia</h2>
+    <p>Twoje zamówienie zostało przyjęte i niedługo wyruszy w drogę!</p>
+    <p>Dziękujemy za zaufanie i dokonanie zakupów w naszym sklepie.</p>
+
+    <div>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Wróć na stronę główną</a>
+    </div>
 </div>
